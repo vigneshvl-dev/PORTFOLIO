@@ -61,4 +61,28 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('reveal');
         revealObserver.observe(el);
     });
+
+    // Typewriter Effect for Hero Subtitle
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) {
+        const text = heroSubtitle.innerText;
+        heroSubtitle.innerHTML = '';
+        heroSubtitle.style.opacity = '1';
+
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                if (text.charAt(i) === '|') {
+                    heroSubtitle.innerHTML += '<span class="divider">|</span>';
+                } else {
+                    heroSubtitle.innerHTML += text.charAt(i);
+                }
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        // Start typewriter after a short delay
+        setTimeout(typeWriter, 1000);
+    }
 });
