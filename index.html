@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Build Version: 2026-01-29.3 -->
+<!-- Build Version: 2026-01-29.4 -->
 
 <head>
     <meta charset="UTF-8">
@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css?v=1.1">
+    <link rel="stylesheet" href="css/chatbot.css">
 </head>
 
 <body>
@@ -308,6 +309,31 @@
                         </div>
                     </div>
 
+                    <!-- Viky AI Project -->
+                    <div class="project-card" id="viky-ai-project">
+                        <div class="project-tag">AI PROJECT</div>
+                        <div class="project-icon">🤖</div>
+                        <h3>VIKY AI</h3>
+                        <p>An intelligent portfolio assistant that helps users explore projects, skills, and contact
+                            information through a conversational interface.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag" style="--tag-color: #f7df1e; color: #000;">JavaScript</span>
+                            <span class="tech-tag" style="--tag-color: #06b6d4;">NLP</span>
+                            <span class="tech-tag" style="--tag-color: #8b5cf6;">UI/UX</span>
+                            <span class="tech-tag" style="--tag-color: #264de4;">CSS3</span>
+                        </div>
+                        <div style="display: flex; gap: 1.5rem; margin-top: auto;">
+                            <a href="#home" class="project-link"
+                                onclick="document.getElementById('chatbot-button').click(); return false;">
+                                Chat Now <span>→</span>
+                            </a>
+                            <a href="https://github.com/vigneshvl-dev/PORTFOLIO" target="_blank" class="project-link"
+                                style="color: var(--text-secondary);">
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
                     <!-- Personal Portfolio Live -->
                     <div class="project-card">
                         <div class="project-tag">1 Week</div>
@@ -433,8 +459,41 @@
         </div>
     </footer>
 
-    <!-- Footer Script -->
+    <!-- Viky AI Chatbot Widget -->
+    <div class="chatbot-widget" id="chatbot-widget">
+        <div class="chatbot-button" id="chatbot-button">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        <div class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">V</div>
+                <div class="chatbot-info">
+                    <h3>Viky AI</h3>
+                    <p>Online | Portfolio Assistant</p>
+                </div>
+            </div>
+            <div class="chatbot-messages" id="chatbot-messages">
+                <div class="message bot">
+                    Hi there! I'm <b>Viky AI</b>, your guide to Vignesh's portfolio. How can I help you today?
+                </div>
+            </div>
+            <div id="typing-indicator" class="typing">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="chatbot-input-area">
+                <input type="text" id="chatbot-input" class="chatbot-input" placeholder="Ask me something...">
+                <button id="chatbot-send" class="chatbot-send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="js/script.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 
 </html>
