@@ -294,17 +294,20 @@ h6 {
 }
 
 .hero-social a {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     transition: var(--transition);
+}
+
+.hero-social a svg {
+    display: block;
 }
 
 .hero-social a:hover {
@@ -881,22 +884,26 @@ h6 {
 }
 
 .social-icon {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     background: rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     color: var(--text-primary);
-    font-weight: 700;
     transition: var(--transition);
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+}
+
+.social-icon svg {
+    display: block;
 }
 
 .social-icon:hover {
     background: var(--accent-gradient);
     transform: translateY(-3px);
+    color: white;
 }
 
 /* Contact Form */
