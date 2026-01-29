@@ -127,8 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (query.includes('hi') || query.includes('hello') || query.includes('hey')) {
             return "Hello! I'm <b>Viky AI</b>. How can I help you explore Vignesh's work today? 👋";
         }
-        if (query.includes('who is vignesh') || query.includes('about')) {
+        if (query.includes('who is vignesh') || query.includes('about the developer')) {
             return "Vignesh is a passionate Computer Science student at Stella Mary's College of Engineering. He loves building modern web apps and interactive games! 👨‍💻";
+        }
+        if (query.includes('who are you') || query.includes('what are you')) {
+            return "I am <b>Viky AI</b>, a smart portfolio assistant. I was designed to help you explore Vignesh's projects and skills! 🤖";
+        }
+        if (query.includes('python')) {
+            return "<b>Python</b> is a versatile, high-level programming language that Vignesh uses for AI, Automation, and Web Development. It's one of his core strengths! 🐍";
         }
         if (query.includes('game') || query.includes('projects')) {
             return `Here are some of Vignesh's top projects:
