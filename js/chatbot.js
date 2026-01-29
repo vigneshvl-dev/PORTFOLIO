@@ -147,7 +147,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         <b>🧩 Memory Match</b> - Test your brain!
                         <a href="match.html" class="chat-link">Play Now</a>
                     </div>
+                    <div class="chat-project-item">
+                        <b>☁️ Server Monitor</b> - DevOps style dashboard.
+                        <a href="https://github.com/vigneshvl-dev/PORTFOLIO" class="chat-link">View Code</a>
+                    </div>
                 </div>`;
+        }
+        if (query.includes('devops') || query.includes('server') || query.includes('monitoring')) {
+            return "Vignesh has a cool <b>Server Monitoring Dashboard</b> project! It uses Python and Flask to monitor CPU and RAM in real-time. It's perfect for DevOps learning! ☁️";
         }
         if (query.includes('contact') || query.includes('email') || query.includes('reach')) {
             return "You can reach Vignesh at <a href='mailto:vigneshvelappan73051@gmail.com' class='chat-link'>vigneshvelappan73051@gmail.com</a>. He's always open to new opportunities!";
