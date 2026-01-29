@@ -5,23 +5,59 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatbotSend = document.getElementById('chatbot-send');
     const chatbotMessages = document.getElementById('chatbot-messages');
     const typingIndicator = document.getElementById('typing-indicator');
+    const clearBtn = document.getElementById('chatbot-clear-btn');
+
+    // Create session storage key
+    const STORAGE_KEY = 'viky_chat_history';
+
+    // Clear Chat Logic
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            if (confirm('Clear chat history?')) {
+                sessionStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        });
+    }
+
+    // Auto-open logic
+    const hasBeenOpened = sessionStorage.getItem('viky_chat_opened');
+    if (!hasBeenOpened) {
+        setTimeout(() => {
+            if (!chatbotWidget.classList.contains('active')) {
+                chatbotWidget.classList.add('active');
+                sessionStorage.setItem('viky_chat_opened', 'true');
+            }
+        }, 8000); // Open after 8 seconds on first visit
+    }
 
     // Toggle Chat Window
     chatbotButton.addEventListener('click', () => {
         chatbotWidget.classList.toggle('active');
         if (chatbotWidget.classList.contains('active')) {
             chatbotInput.focus();
+            sessionStorage.setItem('viky_chat_opened', 'true');
         }
     });
 
+    // Load Chat History
+    const loadHistory = () => {
+        const history = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '[]');
+        if (history.length > 0) {
+            chatbotMessages.innerHTML = ''; // Clear default greeting
+            history.forEach(msg => addMessage(msg.text, msg.sender, false));
+        }
+        showQuickReplies();
+    };
+
     // Handle Sending Messages
-    const sendMessage = () => {
-        const text = chatbotInput.value.trim();
+    const sendMessage = (textOverride = null) => {
+        const text = textOverride || chatbotInput.value.trim();
         if (!text) return;
 
         // Add user message
         addMessage(text, 'user');
-        chatbotInput.value = '';
+        if (!textOverride) chatbotInput.value = '';
 
         // Bot thinking
         showTyping(true);
@@ -30,24 +66,58 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = getBotResponse(text);
             showTyping(false);
             addMessage(response, 'bot');
-        }, 1000 + Math.random() * 1000);
+            showQuickReplies();
+        }, 1000 + Math.random() * 800);
     };
 
-    chatbotSend.addEventListener('click', sendMessage);
+    chatbotSend.addEventListener('click', () => sendMessage());
     chatbotInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendMessage();
     });
 
-    const addMessage = (text, sender) => {
+    const addMessage = (text, sender, save = true) => {
         const msgDiv = document.createElement('div');
         msgDiv.className = `message ${sender}`;
         msgDiv.innerHTML = text;
+
+        // Remove old quick replies before adding new message
+        const oldReplies = chatbotMessages.querySelector('.quick-replies');
+        if (oldReplies) oldReplies.remove();
+
         chatbotMessages.appendChild(msgDiv);
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+        if (save) {
+            const history = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '[]');
+            history.push({ text, sender });
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+        }
     };
 
     const showTyping = (show) => {
         typingIndicator.style.display = show ? 'flex' : 'none';
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    };
+
+    const showQuickReplies = () => {
+        const replies = [
+            { text: "🚀 Show Projects", val: "projects" },
+            { text: "👨‍💻 About Vignesh", val: "about" },
+            { text: "📧 Contact Meta", val: "contact" }
+        ];
+
+        const container = document.createElement('div');
+        container.className = 'quick-replies';
+
+        replies.forEach(reply => {
+            const btn = document.createElement('button');
+            btn.className = 'quick-reply-btn';
+            btn.innerText = reply.text;
+            btn.onclick = () => sendMessage(reply.val);
+            container.appendChild(btn);
+        });
+
+        chatbotMessages.appendChild(container);
         chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
     };
 
@@ -58,21 +128,38 @@ document.addEventListener('DOMContentLoaded', () => {
             return "Hello! I'm <b>Viky AI</b>. How can I help you explore Vignesh's work today? 👋";
         }
         if (query.includes('who is vignesh') || query.includes('about')) {
-            return "Vignesh is a passionate Computer Science student and an aspiring Full-Stack Developer. He's currently in his 2nd Semester at Stella Mary's College of Engineering!";
+            return "Vignesh is a passionate Computer Science student at Stella Mary's College of Engineering. He loves building modern web apps and interactive games! 👨‍💻";
         }
         if (query.includes('game') || query.includes('projects')) {
-            return "Vignesh has built some cool games! You should check out <b>Brick Breaker</b> and <b>Memory Match</b> in the projects section. 🎮";
+            return `Here are some of Vignesh's top projects:
+                <div class="chat-project-list">
+                    <div class="chat-project-item">
+                        <b>🎮 Brick Breaker</b> - Classic arcade fun.
+                        <a href="brick-breaker.html" class="chat-link">Play Now</a>
+                    </div>
+                    <div class="chat-project-item">
+                        <b>🧩 Memory Match</b> - Test your brain!
+                        <a href="match.html" class="chat-link">Play Now</a>
+                    </div>
+                </div>`;
         }
         if (query.includes('contact') || query.includes('email') || query.includes('reach')) {
-            return "You can reach Vignesh at <a href='mailto:vigneshvelappan73051@gmail.com' style='color:#06b6d4'>vigneshvelappan73051@gmail.com</a> or use the contact form below!";
+            return "You can reach Vignesh at <a href='mailto:vigneshvelappan73051@gmail.com' class='chat-link'>vigneshvelappan73051@gmail.com</a>. He's always open to new opportunities!";
         }
         if (query.includes('skill') || query.includes('tech')) {
-            return "He specializes in HTML, CSS, JavaScript, and Python. He's currently exploring UI/UX design with Figma too!";
+            return "He's skilled in <b>HTML5, CSS3, JavaScript,</b> and <b>Python</b>. He also has a great eye for <b>UI/UX Design</b>!";
         }
         if (query.includes('twitter') || query.includes('x')) {
-            return "You can follow Vignesh on X (Twitter) here: <a href='https://x.com/vikyvelappan' target='_blank' style='color:#06b6d4'>@vikyvelappan</a>";
+            return "Follow him on X: <a href='https://x.com/vikyvelappan' target='_blank' class='chat-link'>@vikyvelappan</a>";
+        }
+        if (query.includes('clear') || query.includes('reset')) {
+            sessionStorage.removeItem(STORAGE_KEY);
+            location.reload();
+            return "Clearing chat...";
         }
 
-        return "That's interesting! I'm still learning, but I can tell you about Vignesh's projects, skills, or how to contact him. What would you like to know?";
+        return "I'm not quite sure about that yet. Try asking about his <b>projects</b>, <b>skills</b>, or <b>contact info</b>!";
     };
+
+    loadHistory();
 });
