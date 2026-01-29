@@ -1,0 +1,94 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "How are you",
+        "Is anyone there?",
+        "Hello",
+        "Good day",
+        "Hi there"
+      ],
+      "responses": [
+        "Hello! I'm Viky AI. How can I help you today?",
+        "Good to see you again! What can I do for you?",
+        "Hi there, how can I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye", "I am leaving", "Have a Good day"],
+      "responses": [
+        "See you later, thanks for visiting!",
+        "Have a nice day!",
+        "Bye! Come back again soon."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome", "Thanks for helping me"],
+      "responses": ["My pleasure!", "Any time!", "Happy to help!"]
+    },
+    {
+      "tag": "about",
+      "patterns": [
+        "Who are you?",
+        "What are you?",
+        "Who is Viky AI?",
+        "What is your name?"
+      ],
+      "responses": [
+        "I am Viky AI, an intelligent assistant created by Vignesh to showcase his Python and AI skills!",
+        "I'm Viky AI, your friendly neighborhood chatbot!"
+      ]
+    },
+    {
+      "tag": "python_info",
+      "patterns": [
+        "What is Python?",
+        "Tell me about Python",
+        "Why use Python?",
+        "Is Python good for beginners?"
+      ],
+      "responses": [
+        "Python is a high-level, interpreted programming language known for its readability and versatility. It's great for Web Dev, AI, and Data Science!",
+        "Python is a popular programming language that is easy to learn and very powerful. It's the language I was built with!"
+      ]
+    },
+    {
+      "tag": "programming",
+      "patterns": [
+        "What is programming?",
+        "How do I start coding?",
+        "Best language to learn?"
+      ],
+      "responses": [
+        "Programming is the process of creating a set of instructions that tell a computer how to perform a task.",
+        "To start coding, pick a language like Python and start building small projects like me!"
+      ]
+    },
+    {
+      "tag": "vignesh",
+      "patterns": [
+        "Who is Vignesh?",
+        "Tell me about the developer",
+        "Who created you?"
+      ],
+      "responses": [
+        "Vignesh is a Computer Science student at Stella Mary's College of Engineering with a passion for Web Dev and AI!",
+        "I was created by Vignesh as a mini project to demonstrate NLP and Machine Learning."
+      ]
+    },
+    {
+      "tag": "noanswer",
+      "patterns": [],
+      "responses": [
+        "Sorry, I didn't quite understand that. Could you rephrase?",
+        "I'm still learning! Can you ask about Python, Programming, or the developer?",
+        "Not sure I follow. Try asking 'What is Python?'"
+      ]
+    }
+  ]
+}
