@@ -25,7 +25,3 @@ This project automates the deployment of cloud infrastructure on AWS using Terra
 - Terraform installed
 - AWS CLI configured with credentials
 - An existing AWS Key Pair (update `variables.tf`)
-<<<<<<< HEAD
-
-=======
->>>>>>> 31b91be (Initial Terraform Setup)
