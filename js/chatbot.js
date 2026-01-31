@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return "You can reach Vignesh at <a href='mailto:vigneshvelappan73051@gmail.com' class='chat-link'>vigneshvelappan73051@gmail.com</a>. He's always open to new opportunities!";
         }
         if (query.includes('skill') || query.includes('tech')) {
-            return "He's skilled in <b>HTML5, CSS3, JavaScript,</b> and <b>Python</b>. He also has a great eye for <b>UI/UX Design</b>!";
+            return "He's skilled in <b>Cloud Computing, DevOps, Python,</b> and <b>Web Technologies</b>. He is passionate about building scalable infrastructure!";
         }
         if (query.includes('twitter') || query.includes('x')) {
             return "Follow him on X: <a href='https://x.com/vikyvelappan' target='_blank' class='chat-link'>@vikyvelappan</a>";
