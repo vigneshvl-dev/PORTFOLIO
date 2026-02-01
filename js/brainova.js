@@ -380,8 +380,8 @@ Brainova exists to make students smarter, more confident, and better at understa
                 setTimeout(showApiModal, 2000);
             } else if (error.message.includes('safety')) {
                 errorMessage = "⚠️ This content was blocked by safety filters.";
-            } else if (error.message.includes('quota')) {
-                errorMessage = "⏳ Rate limit exceeded. Please try again in 1 minute.";
+            } else if (error.message.includes('quota') || error.message.includes('exhausted') || error.message.includes('429')) {
+                errorMessage = "⏳ **Rate limit exceeded.**\n\nYou've reached the free limit for the Gemini API (usually 15 messages/min). \n\n**Please wait 1 minute and refresh the page to continue.**";
             } else {
                 errorMessage += `\n\n*Error details: ${error.message}*`;
             }
