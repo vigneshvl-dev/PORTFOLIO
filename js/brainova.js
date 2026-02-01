@@ -396,38 +396,56 @@ Brainova exists to make students smarter, more confident, and better at understa
     async function sendToGemini(message, apiKey, file) {
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-        // Prepare history for Gemini API
+        // 1. Prepare history for Gemini API
         let contents = [];
 
-        // Take the last 10 messages from session history
-        let recentHistory = chatHistory.slice(-10);
+        // Take last 10 turns and clean them
+        let cleanHistory = [];
+        let lastRole = null;
+
+        chatHistory.slice(-10).forEach(msg => {
+            let role = msg.role === 'user' ? 'user' : 'model';
+            // Skip consecutive same roles
+            if (role !== lastRole) {
+                cleanHistory.push({
+                    role: role,
+                    parts: [{ text: msg.content || "..." }]
+                });
+                lastRole = role;
+            }
+        });
 
         // Ensure history starts with 'user'
-        while (recentHistory.length > 0 && recentHistory[0].role !== 'user') {
-            recentHistory.shift();
+        while (cleanHistory.length > 0 && cleanHistory[0].role !== 'user') {
+            cleanHistory.shift();
         }
 
-        // Map to Gemini format
-        contents = recentHistory.map(msg => ({
-            role: msg.role === 'user' ? 'user' : 'model',
-            parts: [{ text: msg.content || "..." }]
-        }));
+        // Ensure history ends with 'model' (so adding 'user' next is valid)
+        while (cleanHistory.length > 0 && cleanHistory[cleanHistory.length - 1].role !== 'model') {
+            cleanHistory.pop();
+        }
 
-        // Current message parts
+        contents = cleanHistory;
+
+        // 2. Prepare current turn
         const currentParts = [];
 
-        // Gemini MUST have text in a part, or it's invalid
-        const textContent = message || (file ? "Analyzing this attachment..." : "Hello");
+        // Every Turn MUST have at least one text part
+        const textContent = (message && message.trim()) ? message : (file ? "Analyzing this attachment..." : "Hello");
         currentParts.push({ text: textContent });
 
         if (file) {
-            const base64Data = await fileToBase64(file);
-            currentParts.push({
-                inline_data: {
-                    mime_type: file.type,
-                    data: base64Data
-                }
-            });
+            try {
+                const base64Data = await fileToBase64(file);
+                currentParts.push({
+                    inline_data: {
+                        mime_type: file.type,
+                        data: base64Data
+                    }
+                });
+            } catch (e) {
+                console.error("File conversion error:", e);
+            }
         }
 
         contents.push({
@@ -435,11 +453,10 @@ Brainova exists to make students smarter, more confident, and better at understa
             parts: currentParts
         });
 
+        // 3. Make the API request
         const response = await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 system_instruction: {
                     parts: [{ text: SYSTEM_PROMPT }]
@@ -450,29 +467,39 @@ Brainova exists to make students smarter, more confident, and better at understa
                     maxOutputTokens: 2048,
                     topP: 0.95,
                     topK: 40
-                }
+                },
+                safetySettings: [
+                    { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_ONLY_HIGH" },
+                    { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_ONLY_HIGH" },
+                    { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_ONLY_HIGH" },
+                    { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_ONLY_HIGH" }
+                ]
             })
         });
 
         if (!response.ok) {
-            const errorData = await response.json();
-            if (response.status === 400 || response.status === 401 || response.status === 403) {
-                throw new Error('Invalid API key');
-            }
-            throw new Error(errorData.error?.message || 'API request failed');
+            const errorData = await response.json().catch(() => ({}));
+            const msg = errorData.error?.message || `API error (${response.status})`;
+            if (response.status === 401 || response.status === 403) throw new Error('Invalid API key');
+            throw new Error(msg);
         }
 
         const data = await response.json();
 
-        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-            return data.candidates[0].content.parts[0].text;
+        // Handle candidates
+        if (data.candidates && data.candidates.length > 0) {
+            const candidate = data.candidates[0];
+            if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+                return candidate.content.parts[0].text;
+            }
+            if (candidate.finishReason === 'SAFETY') throw new Error('Blocked by safety filters');
         }
 
         if (data.promptFeedback?.blockReason) {
-            throw new Error('Blocked by safety filters');
+            throw new Error('Prompt blocked by safety filters');
         }
 
-        throw new Error('Unexpected response format');
+        throw new Error('Gemini returned an empty response. Try a different question.');
     }
 
     function fileToBase64(file) {
