@@ -400,17 +400,7 @@ Brainova exists to make students smarter, more confident, and better at understa
         // Build conversation history for context
         const contents = [];
 
-        // Add system instruction as first user message for context
-        contents.push({
-            role: 'user',
-            parts: [{ text: SYSTEM_PROMPT + "\n\nPlease acknowledge that you understand your role as Brainova." }]
-        });
-        contents.push({
-            role: 'model',
-            parts: [{ text: "I understand! I am Brainova, your AI study assistant. I'm here to help you learn and understand concepts deeply. How can I help you today?" }]
-        });
-
-        // Add chat history (limit to last 10 exchanges for token management)
+        // Add last 10 turns of history (sliding window)
         const recentHistory = chatHistory.slice(-10);
         recentHistory.forEach(msg => {
             contents.push({
@@ -421,7 +411,7 @@ Brainova exists to make students smarter, more confident, and better at understa
 
         // Current message part
         const currentParts = [];
-        currentParts.push({ text: message || "Please analyze this attached file." });
+        if (message) currentParts.push({ text: message });
 
         if (file) {
             const base64Data = await fileToBase64(file);
@@ -432,6 +422,9 @@ Brainova exists to make students smarter, more confident, and better at understa
                 }
             });
         }
+
+        // If no message and no file, it's an error (should be handled earlier)
+        if (currentParts.length === 0) return "No content provided";
 
         contents.push({
             role: 'user',
@@ -444,10 +437,15 @@ Brainova exists to make students smarter, more confident, and better at understa
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                system_instruction: {
+                    parts: [{ text: SYSTEM_PROMPT }]
+                },
                 contents: contents,
                 generationConfig: {
                     temperature: 0.7,
-                    maxOutputTokens: 2048
+                    maxOutputTokens: 2048,
+                    topP: 0.95,
+                    topK: 40
                 }
             })
         });
