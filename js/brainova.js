@@ -396,26 +396,22 @@ Brainova exists to make students smarter, more confident, and better at understa
     async function sendToGemini(message, apiKey, file) {
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-        // Build conversation history for context
+        // Prepare history for Gemini API
         let contents = [];
 
-        // Filter and prepare history
-        const processedHistory = chatHistory.map(msg => ({
+        // Take the last 10 messages from session history
+        let recentHistory = chatHistory.slice(-10);
+
+        // Ensure history starts with 'user'
+        while (recentHistory.length > 0 && recentHistory[0].role !== 'user') {
+            recentHistory.shift();
+        }
+
+        // Map to Gemini format
+        contents = recentHistory.map(msg => ({
             role: msg.role === 'user' ? 'user' : 'model',
             parts: [{ text: msg.content || "..." }]
         }));
-
-        // Gemini history MUST start with 'user'. If it starts with 'model', remove it.
-        if (processedHistory.length > 0 && processedHistory[0].role === 'model') {
-            processedHistory.shift();
-        }
-
-        // Limit to last 10 turns (ensure it's an even number so last is model, if we are about to add user)
-        // Or just take the last 10 and if the last one is 'user', remove it to avoid consecutive 'user' roles.
-        contents = processedHistory.slice(-10);
-        if (contents.length > 0 && contents[contents.length - 1].role === 'user') {
-            contents.pop();
-        }
 
         // Current message parts
         const currentParts = [];
