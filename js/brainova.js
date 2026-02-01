@@ -248,17 +248,6 @@ Brainova exists to make students smarter, more confident, and better at understa
         apiModal.classList.remove('active');
     }
 
-    function saveApiKey() {
-        const apiKey = apiKeyInput.value.trim();
-        if (!apiKey) {
-            alert('Please enter a valid API key');
-            return;
-        }
-        localStorage.setItem(API_KEY_STORAGE, apiKey);
-        hideApiModal();
-        userInput.focus();
-    }
-
     function loadChatHistory() {
         const saved = sessionStorage.getItem(CHAT_HISTORY_STORAGE);
         if (saved) {
@@ -426,10 +415,8 @@ Brainova exists to make students smarter, more confident, and better at understa
             console.error('Error:', error);
 
             let errorMessage = "I'm sorry, I encountered an error. ";
-            if (error.message.includes('API key')) {
-                errorMessage = "❌ **Invalid API Key.** Please check your key or [get a new one](https://aistudio.google.com/app/apikey).";
-                localStorage.removeItem(API_KEY_STORAGE);
-                setTimeout(showApiModal, 2000);
+            if (error.message.includes('API key') || error.message.includes('401') || error.message.includes('403')) {
+                errorMessage = "❌ **Brainova Service Error.** The API configuration is incorrect. Please contact the administrator.";
             } else if (error.message.includes('safety')) {
                 errorMessage = "⚠️ This content was blocked by safety filters.";
             } else if (error.message.includes('quota') || error.message.includes('exhausted') || error.message.includes('429')) {
