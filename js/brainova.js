@@ -397,20 +397,32 @@ Brainova exists to make students smarter, more confident, and better at understa
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
         // Build conversation history for context
-        const contents = [];
+        let contents = [];
 
-        // Add last 10 turns of history (sliding window)
-        const recentHistory = chatHistory.slice(-10);
-        recentHistory.forEach(msg => {
-            contents.push({
-                role: msg.role === 'user' ? 'user' : 'model',
-                parts: [{ text: msg.content }]
-            });
-        });
+        // Filter and prepare history
+        const processedHistory = chatHistory.map(msg => ({
+            role: msg.role === 'user' ? 'user' : 'model',
+            parts: [{ text: msg.content || "..." }]
+        }));
 
-        // Current message part
+        // Gemini history MUST start with 'user'. If it starts with 'model', remove it.
+        if (processedHistory.length > 0 && processedHistory[0].role === 'model') {
+            processedHistory.shift();
+        }
+
+        // Limit to last 10 turns (ensure it's an even number so last is model, if we are about to add user)
+        // Or just take the last 10 and if the last one is 'user', remove it to avoid consecutive 'user' roles.
+        contents = processedHistory.slice(-10);
+        if (contents.length > 0 && contents[contents.length - 1].role === 'user') {
+            contents.pop();
+        }
+
+        // Current message parts
         const currentParts = [];
-        if (message) currentParts.push({ text: message });
+
+        // Gemini MUST have text in a part, or it's invalid
+        const textContent = message || (file ? "Analyzing this attachment..." : "Hello");
+        currentParts.push({ text: textContent });
 
         if (file) {
             const base64Data = await fileToBase64(file);
@@ -421,9 +433,6 @@ Brainova exists to make students smarter, more confident, and better at understa
                 }
             });
         }
-
-        // If no message and no file, it's an error (should be handled earlier)
-        if (currentParts.length === 0) return "No content provided";
 
         contents.push({
             role: 'user',
