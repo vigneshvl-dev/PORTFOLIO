@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const newChatBtn = document.getElementById('new-chat-btn');
     const featureCards = document.querySelectorAll('.feature-card');
 
+    // File Upload Elements
+    const attachBtn = document.getElementById('attach-btn');
+    const fileUpload = document.getElementById('file-upload');
+    const filePreview = document.getElementById('file-preview');
+    const fileNameDisplay = document.getElementById('file-name');
+    const removeFileBtn = document.getElementById('remove-file-btn');
+
     // API Modal Elements
     const apiModal = document.getElementById('api-modal');
     const apiKeyInput = document.getElementById('api-key-input');
@@ -116,6 +123,7 @@ Brainova exists to make students smarter, more confident, and better at understa
 
     // Chat history for context
     let chatHistory = [];
+    let attachedFile = null;
 
     // Initialize
     init();
@@ -149,6 +157,11 @@ Brainova exists to make students smarter, more confident, and better at understa
                 handleSendMessage();
             }
         });
+
+        // File Upload
+        attachBtn.addEventListener('click', () => fileUpload.click());
+        fileUpload.addEventListener('change', handleFileSelect);
+        removeFileBtn.addEventListener('click', removeAttachedFile);
 
         // New chat
         newChatBtn.addEventListener('click', startNewChat);
@@ -280,9 +293,41 @@ Brainova exists to make students smarter, more confident, and better at understa
         chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
+    function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Check size (Max 15MB)
+        if (file.size > 15 * 1024 * 1024) {
+            alert('File is too large. Please select a file under 15MB.');
+            fileUpload.value = '';
+            return;
+        }
+
+        attachedFile = file;
+        fileNameDisplay.textContent = file.name;
+        filePreview.style.display = 'flex';
+
+        // Change icon based on type
+        const icon = filePreview.querySelector('.file-info i');
+        if (file.type.startsWith('image/')) {
+            icon.className = 'fas fa-file-image';
+        } else if (file.type === 'application/pdf') {
+            icon.className = 'fas fa-file-pdf';
+        } else {
+            icon.className = 'fas fa-file-alt';
+        }
+    }
+
+    function removeAttachedFile() {
+        attachedFile = null;
+        fileUpload.value = '';
+        filePreview.style.display = 'none';
+    }
+
     async function handleSendMessage() {
         const message = userInput.value.trim();
-        if (!message) return;
+        if (!message && !attachedFile) return;
 
         const apiKey = localStorage.getItem(API_KEY_STORAGE);
         if (!apiKey) {
@@ -293,20 +338,32 @@ Brainova exists to make students smarter, more confident, and better at understa
         // Show chat view if on welcome screen
         showChatView();
 
+        // Prepare what to display
+        let displayContent = message;
+        if (attachedFile) {
+            displayContent += `\n\n*[Attached File: ${attachedFile.name}]*`;
+        }
+
         // Display user message
-        displayMessage('user', message);
+        displayMessage('user', displayContent);
+
+        // Capture data before clearing
+        const currentMessage = message;
+        const currentFile = attachedFile;
+
         userInput.value = '';
         userInput.style.height = 'auto';
+        removeAttachedFile();
 
         // Add to history
-        chatHistory.push({ role: 'user', content: message });
+        chatHistory.push({ role: 'user', content: displayContent });
 
         // Show typing indicator
         showTyping();
         sendBtn.disabled = true;
 
         try {
-            const response = await sendToGemini(message, apiKey);
+            const response = await sendToGemini(currentMessage, apiKey, currentFile);
             hideTyping();
             displayMessage('bot', response);
 
@@ -319,11 +376,15 @@ Brainova exists to make students smarter, more confident, and better at understa
 
             let errorMessage = "I'm sorry, I encountered an error. ";
             if (error.message.includes('API key')) {
-                errorMessage += "Please check your API key and try again.";
+                errorMessage = "❌ **Invalid API Key.** Please check your key or [get a new one](https://aistudio.google.com/app/apikey).";
                 localStorage.removeItem(API_KEY_STORAGE);
-                showApiModal();
+                setTimeout(showApiModal, 2000);
+            } else if (error.message.includes('safety')) {
+                errorMessage = "⚠️ This content was blocked by safety filters.";
+            } else if (error.message.includes('quota')) {
+                errorMessage = "⏳ Rate limit exceeded. Please try again in 1 minute.";
             } else {
-                errorMessage += "Please try again later.";
+                errorMessage += `\n\n*Error details: ${error.message}*`;
             }
 
             displayMessage('bot', errorMessage);
@@ -333,7 +394,7 @@ Brainova exists to make students smarter, more confident, and better at understa
         userInput.focus();
     }
 
-    async function sendToGemini(message, apiKey) {
+    async function sendToGemini(message, apiKey, file) {
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
         // Build conversation history for context
@@ -346,11 +407,11 @@ Brainova exists to make students smarter, more confident, and better at understa
         });
         contents.push({
             role: 'model',
-            parts: [{ text: "I understand! I am Brainova, your AI study assistant. I'm here to help you learn, understand concepts deeply, and succeed in your studies. How can I help you today?" }]
+            parts: [{ text: "I understand! I am Brainova, your AI study assistant. I'm here to help you learn and understand concepts deeply. How can I help you today?" }]
         });
 
         // Add chat history (limit to last 10 exchanges for token management)
-        const recentHistory = chatHistory.slice(-20);
+        const recentHistory = chatHistory.slice(-10);
         recentHistory.forEach(msg => {
             contents.push({
                 role: msg.role === 'user' ? 'user' : 'model',
@@ -358,13 +419,24 @@ Brainova exists to make students smarter, more confident, and better at understa
             });
         });
 
-        // Add current message if not already in history
-        if (chatHistory[chatHistory.length - 1]?.content !== message) {
-            contents.push({
-                role: 'user',
-                parts: [{ text: message }]
+        // Current message part
+        const currentParts = [];
+        currentParts.push({ text: message || "Please analyze this attached file." });
+
+        if (file) {
+            const base64Data = await fileToBase64(file);
+            currentParts.push({
+                inline_data: {
+                    mime_type: file.type,
+                    data: base64Data
+                }
             });
         }
+
+        contents.push({
+            role: 'user',
+            parts: currentParts
+        });
 
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -375,28 +447,8 @@ Brainova exists to make students smarter, more confident, and better at understa
                 contents: contents,
                 generationConfig: {
                     temperature: 0.7,
-                    topK: 40,
-                    topP: 0.95,
-                    maxOutputTokens: 8192
-                },
-                safetySettings: [
-                    {
-                        category: "HARM_CATEGORY_HARASSMENT",
-                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                    },
-                    {
-                        category: "HARM_CATEGORY_HATE_SPEECH",
-                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                    },
-                    {
-                        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                    },
-                    {
-                        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                        threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                    }
-                ]
+                    maxOutputTokens: 2048
+                }
             })
         });
 
@@ -410,10 +462,23 @@ Brainova exists to make students smarter, more confident, and better at understa
 
         const data = await response.json();
 
-        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
             return data.candidates[0].content.parts[0].text;
         }
 
+        if (data.promptFeedback?.blockReason) {
+            throw new Error('Blocked by safety filters');
+        }
+
         throw new Error('Unexpected response format');
+    }
+
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
     }
 });

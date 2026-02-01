@@ -52,6 +52,9 @@
                 </div>
             </div>
             <div class="header-right">
+                <div class="made-by">
+                    <span>Made by <a href="index.html">V.L. Vignesh</a></span>
+                </div>
                 <div class="status-indicator">
                     <span class="status-dot"></span>
                     <span class="status-text">Online</span>
@@ -128,6 +131,12 @@
         <footer class="input-area">
             <div class="input-container">
                 <div class="input-wrapper">
+                    <div class="input-left-actions">
+                        <input type="file" id="file-upload" accept="image/*,.pdf,.txt,.doc,.docx" hidden>
+                        <button class="attach-btn" id="attach-btn" title="Upload Image or PDF">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                    </div>
                     <textarea id="user-input" placeholder="Ask me anything about your studies..." rows="1"
                         autofocus></textarea>
                     <div class="input-actions">
@@ -135,6 +144,15 @@
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
+                </div>
+                <div class="file-preview" id="file-preview" style="display: none;">
+                    <div class="file-info">
+                        <i class="fas fa-file"></i>
+                        <span id="file-name">filename.pdf</span>
+                    </div>
+                    <button class="remove-file-btn" id="remove-file-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
                 <p class="input-hint">
                     <i class="fas fa-lightbulb"></i>
