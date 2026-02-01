@@ -355,10 +355,8 @@ Brainova exists to make students smarter, more confident, and better at understa
         userInput.style.height = 'auto';
         removeAttachedFile();
 
-        // Add to history
-        chatHistory.push({ role: 'user', content: displayContent });
+        // DON'T add to history yet to keep roles alternating in API call
 
-        // Show typing indicator
         showTyping();
         sendBtn.disabled = true;
 
@@ -367,7 +365,8 @@ Brainova exists to make students smarter, more confident, and better at understa
             hideTyping();
             displayMessage('bot', response);
 
-            // Add bot response to history
+            // Add user message AND bot response to history at the same time
+            chatHistory.push({ role: 'user', content: displayContent });
             chatHistory.push({ role: 'model', content: response });
             saveChatHistory();
         } catch (error) {
