@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brainova - AI Study Assistant for College Students</title>
+    <meta name="description"
+        content="Brainova is your AI-powered study partner. Get help with concepts, projects, coding, and exam preparation.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Marked.js for Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/brainova.css">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <a href="index.html" class="back-btn" title="Back to Portfolio">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Brainova</h1>
+                        <span class="tagline">AI Study Assistant</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="made-by">
+                    <span>Made by <a href="index.html">V.L. Vignesh</a></span>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Online</span>
+                </div>
+                <button class="new-chat-btn" id="new-chat-btn" title="New Chat">
+                    <i class="fas fa-plus"></i>
+                    <span>New Chat</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Chat Container -->
+        <main class="chat-container">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcome-screen">
+                <div class="welcome-content">
+                    <div class="welcome-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h2>Welcome to Brainova!</h2>
+                    <p>Your AI-powered study partner for college success</p>
+
+                    <div class="feature-cards">
+                        <div class="feature-card"
+                            data-prompt="Explain the concept of Object-Oriented Programming with examples">
+                            <div class="feature-icon">📚</div>
+                            <h3>Learn Concepts</h3>
+                            <p>Deep explanations with examples</p>
+                        </div>
+                        <div class="feature-card"
+                            data-prompt="Help me build a project on Machine Learning for beginners">
+                            <div class="feature-icon">🚀</div>
+                            <h3>Project Help</h3>
+                            <p>Step-by-step guidance</p>
+                        </div>
+                        <div class="feature-card"
+                            data-prompt="Write a Python program to implement Binary Search with explanation">
+                            <div class="feature-icon">💻</div>
+                            <h3>Coding Support</h3>
+                            <p>Clean code with logic</p>
+                        </div>
+                        <div class="feature-card"
+                            data-prompt="Prepare me for Computer Networks exam - key topics and short answers">
+                            <div class="feature-icon">📝</div>
+                            <h3>Exam Prep</h3>
+                            <p>Scoring-friendly answers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="messages-container" id="messages-container">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="typing-indicator" id="typing-indicator">
+                <div class="typing-avatar">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="typing-content">
+                    <span>Brainova is thinking</span>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <footer class="input-area">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <div class="input-left-actions">
+                        <input type="file" id="file-upload" accept="image/*,.pdf,.txt,.doc,.docx" hidden>
+                        <button class="attach-btn" id="attach-btn" title="Upload Image or PDF">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                    </div>
+                    <textarea id="user-input" placeholder="Ask me anything about your studies..." rows="1"
+                        autofocus></textarea>
+                    <div class="input-actions">
+                        <button class="send-btn" id="send-btn" title="Send Message">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="file-preview" id="file-preview" style="display: none;">
+                    <div class="file-info">
+                        <i class="fas fa-file"></i>
+                        <span id="file-name">filename.pdf</span>
+                    </div>
+                    <button class="remove-file-btn" id="remove-file-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="input-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    Press Enter to send, Shift+Enter for new line
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- API Key Modal -->
+    <div class="modal-overlay" id="api-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2>Setup Brainova</h2>
+                <p>Enter your Google Gemini API key to start chatting</p>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="api-key-input">API Key</label>
+                    <input type="password" id="api-key-input" placeholder="Enter your Gemini API key">
+                </div>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="get-key-link">
+                    <i class="fas fa-external-link-alt"></i>
+                    Get your free API key from Google AI Studio
+                </a>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary" id="save-api-key">
+                    <i class="fas fa-check"></i>
+                    Start Learning
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/brainova.js"></script>
+</body>
+
+</html>
