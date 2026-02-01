@@ -449,7 +449,8 @@ h6 {
     }
 
     .nav-links {
-        display: none;
+        height: 0;
+        overflow: hidden;
     }
 
     .menu-toggle {
@@ -1081,6 +1082,7 @@ h6 {
 /* Mobile Menu Styles (Enhanced) */
 @media (max-width: 768px) {
     .nav-links {
+        display: flex;
         position: fixed;
         top: 70px;
         /* Below navbar */
@@ -1091,9 +1093,11 @@ h6 {
         backdrop-filter: blur(10px);
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         overflow: hidden;
         transition: height 0.3s ease;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        z-index: 999;
     }
 
     .nav-links.active {
