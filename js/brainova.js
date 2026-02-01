@@ -17,10 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileNameDisplay = document.getElementById('file-name');
     const removeFileBtn = document.getElementById('remove-file-btn');
 
-    // API Modal Elements
-    const apiModal = document.getElementById('api-modal');
-    const apiKeyInput = document.getElementById('api-key-input');
-    const saveApiKeyBtn = document.getElementById('save-api-key');
+    // API Modal Elements Removed for Demo Mode
 
     // Storage Keys
     const CHAT_HISTORY_STORAGE = 'brainova_chat_history';
@@ -191,12 +188,8 @@ Brainova exists to make students smarter, more confident, and better at understa
         });
     }
 
-    function showApiModal() {
-        apiModal.classList.add('active');
-    }
-
     function hideApiModal() {
-        apiModal.classList.remove('active');
+        // Modal removed in Demo Mode
     }
 
     function loadChatHistory() {
