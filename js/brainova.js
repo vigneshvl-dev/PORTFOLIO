@@ -23,27 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveApiKeyBtn = document.getElementById('save-api-key');
 
     // Storage Keys
-    const AUTH_USER_STORAGE = 'brainova_user';
     const CHAT_HISTORY_STORAGE = 'brainova_chat_history';
 
-    // IMPORTANT: Hardcoded API Key for one-click experience
-    // Note: In a production app, this should be handled by a backend
-    const SERVICE_API_KEY = 'GOOGLE_AI_STUDIO_API_KEY'; // Replace with your actual key
+    // Gemini API Configuration (Placeholder)
+    const SERVICE_API_KEY = 'DEMO_MODE';
 
-    // Firebase Configuration
-    const firebaseConfig = {
-        apiKey: "YOUR_FIREBASE_API_KEY",
-        authDomain: "your-app.firebaseapp.com",
-        projectId: "your-app",
-        storageBucket: "your-app.appspot.com",
-        messagingSenderId: "123456789",
-        appId: "1:123456789:web:abcdef"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    // Firebase Removed for "No Login"
+    const auth = { currentUser: { displayName: "Guest Student" } }; // Mock user object for demo state
 
     // Brainova System Prompt
     const SYSTEM_PROMPT = `You are Brainova, an advanced AI study assistant designed especially for college students.
@@ -148,17 +134,8 @@ Brainova exists to make students smarter, more confident, and better at understa
     init();
 
     function init() {
-        // Monitor Auth State
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                hideApiModal();
-                updateUserUI(user);
-            } else {
-                showApiModal();
-            }
-        });
-
-        // Load chat history
+        // App starts directly in Demo Mode
+        console.log("Brainova running in Demo Mode");
         loadChatHistory();
 
         // Setup event listeners
@@ -166,29 +143,14 @@ Brainova exists to make students smarter, more confident, and better at understa
 
         // Auto-resize textarea
         setupTextareaAutoResize();
+
+        // Initial UI Setup
+        updateUserUI(auth.currentUser);
     }
 
     function updateUserUI(user) {
-        const headerRight = document.querySelector('.header-right');
-        let userMenu = document.getElementById('user-menu');
-
-        if (!userMenu) {
-            userMenu = document.createElement('div');
-            userMenu.id = 'user-menu';
-            userMenu.className = 'user-menu';
-            headerRight.insertBefore(userMenu, headerRight.firstChild);
-        }
-
-        userMenu.innerHTML = `
-            <img src="${user.photoURL}" alt="${user.displayName}" class="user-avatar" title="${user.displayName}">
-            <button class="logout-btn" id="logout-btn" title="Logout">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
-        `;
-
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            auth.signOut();
-        });
+        // Simple UI update for guest mode
+        console.log("Logged in as:", user.displayName);
     }
 
     function setupEventListeners() {
@@ -220,17 +182,6 @@ Brainova exists to make students smarter, more confident, and better at understa
                 }
             });
         });
-
-        // Google Login
-        const googleLoginBtn = document.getElementById('google-login-btn');
-        if (googleLoginBtn) {
-            googleLoginBtn.addEventListener('click', () => {
-                auth.signInWithPopup(googleProvider).catch(error => {
-                    console.error("Login Error:", error);
-                    alert("Authentication failed: " + error.message);
-                });
-            });
-        }
     }
 
     function setupTextareaAutoResize() {
@@ -364,17 +315,7 @@ Brainova exists to make students smarter, more confident, and better at understa
         const message = userInput.value.trim();
         if (!message && !attachedFile) return;
 
-        // Check if logged in
-        if (!auth.currentUser) {
-            showApiModal();
-            return;
-        }
-
-        const apiKey = SERVICE_API_KEY; // Use hardcoded service key
-        if (apiKey === 'GOOGLE_AI_STUDIO_API_KEY') {
-            alert("Error: Admin has not configured the API Key yet.");
-            return;
-        }
+        const apiKey = SERVICE_API_KEY;
 
         // Show chat view if on welcome screen
         showChatView();
@@ -402,7 +343,15 @@ Brainova exists to make students smarter, more confident, and better at understa
         sendBtn.disabled = true;
 
         try {
-            const response = await sendToGemini(currentMessage, apiKey, currentFile);
+            let response;
+            if (apiKey === 'DEMO_MODE') {
+                // Mock response for portfolio demo
+                await new Promise(r => setTimeout(r, 1000));
+                response = "Hello! I am Brainova, your AI study assistant. I am currently running in **Demo Mode**.\n\nTo enable full AI capabilities, you can easily integrate a Gemini API key in the code. For now, I can help you explore the Interface!";
+            } else {
+                response = await sendToGemini(currentMessage, apiKey, currentFile);
+            }
+
             hideTyping();
             displayMessage('bot', response);
 
