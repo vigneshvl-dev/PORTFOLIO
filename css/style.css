@@ -867,6 +867,40 @@ h6 {
     color: var(--text-secondary);
 }
 
+#stats .stat-card.certificate-card {
+    gap: 1rem;
+    padding: 2rem 1.5rem;
+}
+
+.certificate-img-wrapper {
+    width: 100%;
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.cert-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.certificate-img-wrapper:hover .cert-img {
+    transform: scale(1.1);
+}
+
+.cert-detail {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    font-style: italic;
+}
+
 /* Responsive updates for new sections */
 @media (max-width: 968px) {
     .about-content {
