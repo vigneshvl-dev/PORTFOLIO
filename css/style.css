@@ -681,26 +681,14 @@ h6 {
 /* Stats Section */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
 #stats .stat-card {
-    min-height: 400px;
-    /* Ensure uniform height for the grid */
-}
-
-.achievement-card {
-    justify-content: flex-start !important;
-}
-
-.stat-info-details {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    background: var(--card-bg);
 }
 
 #stats .stat-card {
