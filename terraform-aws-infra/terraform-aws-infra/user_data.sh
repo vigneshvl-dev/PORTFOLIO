@@ -7,4 +7,4 @@ sudo usermod -a -G docker ec2-user
 
 # Pull and run the container (Using the image from your CI/CD project!)
 # Note: Ensure this image exists on DockerHub or use 'nginx' for testing
-sudo docker run -d -p 80:5000 vigneshvl-dev/cicd-web-app:latest
+# sudo docker run -d -p 80:5000 vigneshvl-dev/cicd-web-app:latest
