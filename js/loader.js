@@ -10,11 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!loader || !terminalBody) return;
 
     const messages = [
-        "Initializing Portfolio...",
-        "Loading DevOps Skills...",
-        "Connecting to Cloud Infrastructure...",
-        "Starting CI/CD Pipeline...",
-        "Deployment Successful 🚀"
+        "Loading..."
     ];
 
     let messageIndex = 0;
