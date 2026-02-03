@@ -1158,55 +1158,23 @@ h6 {
 }
 
 .terminal-container {
-    width: 90%;
-    max-width: 600px;
-    background: rgba(30, 41, 59, 0.7);
+    width: auto;
+    min-width: 200px;
+    background: rgba(30, 41, 59, 0.6);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(6, 182, 212, 0.1);
     overflow: hidden;
-}
-
-.terminal-header {
-    background: rgba(15, 23, 42, 0.8);
-    padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.header-button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-
-.header-button.red {
-    background: #ff5f56;
-}
-
-.header-button.yellow {
-    background: #ffbd2e;
-}
-
-.header-button.green {
-    background: #27c93f;
-}
-
-.header-title {
-    margin-left: 10px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    font-family: monospace;
-    letter-spacing: 1px;
+    padding: 10px;
 }
 
 .terminal-body {
-    padding: 20px;
+    padding: 15px 25px;
     font-family: 'Courier New', Courier, monospace;
-    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .terminal-line {
