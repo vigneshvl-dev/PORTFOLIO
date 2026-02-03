@@ -1131,7 +1131,115 @@ h6 {
         transform: translateY(8px) rotate(45deg);
     }
 
+
     .menu-toggle.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+/* Terminal Loader Styles */
+.terminal-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+.terminal-loader-overlay.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.terminal-container {
+    width: 90%;
+    max-width: 600px;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.2);
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: rgba(15, 23, 42, 0.8);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.header-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.header-button.red {
+    background: #ff5f56;
+}
+
+.header-button.yellow {
+    background: #ffbd2e;
+}
+
+.header-button.green {
+    background: #27c93f;
+}
+
+.header-title {
+    margin-left: 10px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+.terminal-body {
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    min-height: 200px;
+}
+
+.terminal-line {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.prompt {
+    color: var(--accent-secondary);
+    font-weight: bold;
+}
+
+.text {
+    color: #e2e8f0;
+    text-shadow: 0 0 5px rgba(226, 232, 240, 0.3);
+}
+
+.terminal-line:last-child .text {
+    color: #4ade80;
+    /* Light neon green for success */
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+}
+
+.cursor {
+    color: var(--accent-secondary);
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
     }
 }
