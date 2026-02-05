@@ -1359,9 +1359,4 @@ h6 {
     font-size: 0.9rem;
 }
 
-@keyframes blink {
-    50% {
-        opacity: 0;
-    }
-}@ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   {   . l o a d e r - t i t l e   {   f o n t - s i z e :   1 . 8 r e m ;   }   }  
- 
+@media (max-width: 768px) { .loader-title { font-size: 1.8rem; } }
