@@ -1,54 +1,43 @@
 /**
- * Premium Odyssey Loader - v2.0
- * Handles the progress bar simulation and loading transition.
+ * Roblox-Style Loader - v3.0
+ * Handles the asset loading simulation and progress.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('loader-overlay');
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
-    const loaderStatus = document.getElementById('loader-status');
+    const assetsCount = document.getElementById('assets-count');
 
-    if (!loader || !progressBar || !progressText) return;
+    if (!loader || !progressBar || !progressText || !assetsCount) return;
 
     let progress = 0;
-    const statuses = [
-        "Initializing engine...",
-        "Loading assets...",
-        "Optimizing performance...",
-        "Finalizing environment...",
-        "Experience ready!"
-    ];
+    const totalAssets = 100;
 
     function updateProgress() {
         // Randomly increment progress
-        const increment = Math.random() * 15 + 5;
+        const increment = Math.random() * 10 + 2;
         progress += increment;
 
         if (progress > 100) progress = 100;
 
         // Update UI
         progressBar.style.width = `${progress}%`;
-        progressText.textContent = `Ready! ${Math.round(progress)}%`;
+        progressText.textContent = `Loading... ${Math.round(progress)}%`;
 
-        // Update status text based on progress
-        const statusIndex = Math.min(
-            Math.floor((progress / 100) * statuses.length),
-            statuses.length - 1
-        );
-        loaderStatus.textContent = statuses[statusIndex];
+        // Simulating asset count based on progress
+        const currentAssets = Math.floor((progress / 100) * totalAssets);
+        assetsCount.textContent = `Loaded ${currentAssets} / ${totalAssets} Assets`;
 
         if (progress < 100) {
-            // Random delay for simulation
-            const delay = Math.random() * 300 + 200;
+            const delay = Math.random() * 200 + 100;
             setTimeout(updateProgress, delay);
         } else {
             // Once complete, wait a bit then fade out
             setTimeout(() => {
                 loader.classList.add('fade-out');
-                document.body.style.overflow = 'auto'; // Re-enable scrolling
+                document.body.style.overflow = 'auto';
 
-                // Remove loader from DOM after animation
                 setTimeout(() => {
                     loader.style.display = 'none';
                 }, 800);
@@ -57,6 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Start loading process
-    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    document.body.style.overflow = 'hidden';
     setTimeout(updateProgress, 500);
 });
