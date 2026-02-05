@@ -1,57 +1,49 @@
 /**
- * DevOps Terminal Loader - v1.0
- * Handles the typing animation and auto-hide logic for the loading screen.
+ * Premium Odyssey Loader - v2.0
+ * Handles the progress bar simulation and loading transition.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const loader = document.getElementById('terminal-loader');
-    const terminalBody = document.getElementById('terminal-body');
+    const loader = document.getElementById('loader-overlay');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const loaderStatus = document.getElementById('loader-status');
 
-    if (!loader || !terminalBody) return;
+    if (!loader || !progressBar || !progressText) return;
 
-    const messages = [
-        "Loading..."
+    let progress = 0;
+    const statuses = [
+        "Initializing engine...",
+        "Loading assets...",
+        "Optimizing performance...",
+        "Finalizing environment...",
+        "Experience ready!"
     ];
 
-    let messageIndex = 0;
+    function updateProgress() {
+        // Randomly increment progress
+        const increment = Math.random() * 15 + 5;
+        progress += increment;
 
-    function typeMessage(message, index, callback) {
-        const line = document.createElement('div');
-        line.className = 'terminal-line';
-        line.innerHTML = '<span class="prompt">></span> <span class="text"></span>';
-        terminalBody.appendChild(line);
+        if (progress > 100) progress = 100;
 
-        const textSpan = line.querySelector('.text');
-        let charIndex = 0;
+        // Update UI
+        progressBar.style.width = `${progress}%`;
+        progressText.textContent = `Ready! ${Math.round(progress)}%`;
 
-        function typeChar() {
-            if (charIndex < message.length) {
-                textSpan.textContent += message.charAt(charIndex);
-                charIndex++;
-                setTimeout(typeChar, 30); // Speed of typing
-            } else {
-                // Done typing this line
-                if (callback) callback();
-            }
-        }
+        // Update status text based on progress
+        const statusIndex = Math.min(
+            Math.floor((progress / 100) * statuses.length),
+            statuses.length - 1
+        );
+        loaderStatus.textContent = statuses[statusIndex];
 
-        typeChar();
-    }
-
-    function processNextMessage() {
-        if (messageIndex < messages.length) {
-            typeMessage(messages[messageIndex], 0, () => {
-                messageIndex++;
-                setTimeout(processNextMessage, 400); // Delay between lines
-            });
+        if (progress < 100) {
+            // Random delay for simulation
+            const delay = Math.random() * 300 + 200;
+            setTimeout(updateProgress, delay);
         } else {
-            // All messages typed, add blinking cursor
-            const cursorLine = document.createElement('div');
-            cursorLine.className = 'terminal-line';
-            cursorLine.innerHTML = '<span class="prompt">></span> <span class="cursor">_</span>';
-            terminalBody.appendChild(cursorLine);
-
-            // Wait 2 seconds then fade out
+            // Once complete, wait a bit then fade out
             setTimeout(() => {
                 loader.classList.add('fade-out');
                 document.body.style.overflow = 'auto'; // Re-enable scrolling
@@ -60,11 +52,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     loader.style.display = 'none';
                 }, 800);
-            }, 2000);
+            }, 1000);
         }
     }
 
-    // Start the animation
-    document.body.style.overflow = 'hidden'; // Prevent scrolling during loading
-    setTimeout(processNextMessage, 500);
+    // Start loading process
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+    setTimeout(updateProgress, 500);
 });
