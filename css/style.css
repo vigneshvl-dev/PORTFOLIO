@@ -1271,189 +1271,183 @@ h6 {
 }
 
 /* Sci-Fi HUD Loader Styles */
-.loader-overlay.scifi-hud {
+.loader-overlay.scifi-style {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
+    background-color: #050b14;
     z-index: 9999;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     overflow: hidden;
     transition: opacity 0.8s ease, visibility 0.8s;
-    font-family: 'Courier New', Courier, monospace;
-    /* Tech font fallback */
+    font-family: 'Rajdhani', 'Orbitron', sans-serif;
+    /* Tech feel */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.scifi-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-}
-
-.hud-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    position: relative;
-    padding: 2rem;
-    border: 1px solid rgba(0, 243, 255, 0.1);
-    background: rgba(0, 243, 255, 0.02);
-}
-
-/* Circular Dial */
-.dial-container {
-    position: relative;
-    width: 120px;
-    height: 120px;
-}
-
-.dial-svg {
-    width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-}
-
-.dial-bg {
-    fill: none;
-    stroke: #0f172a;
-    stroke-width: 8;
-}
-
-.dial-progress {
-    fill: none;
-    stroke: #00F3FF;
-    stroke-width: 8;
-    stroke-linecap: round;
-    transition: stroke-dashoffset 0.1s linear;
-    filter: drop-shadow(0 0 5px #00F3FF);
-}
-
-.dial-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-shadow: 0 0 10px #00F3FF;
-}
-
-/* Linear HUD */
-.linear-hud {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    width: 300px;
-}
-
-.hud-header {
-    height: 10px;
-    display: flex;
-    align-items: flex-end;
-}
-
-.hud-bar-deco {
-    width: 40px;
-    height: 4px;
-    background: #00F3FF;
-    box-shadow: 0 0 5px #00F3FF;
-}
-
-.segmented-bar-container {
-    width: 100%;
-    height: 30px;
-    background: rgba(0, 243, 255, 0.1);
-    border: 1px solid rgba(0, 243, 255, 0.3);
-    padding: 2px;
-    position: relative;
-    overflow: hidden;
-}
-
-.segmented-bar {
-    height: 100%;
-    width: 0%;
-    background: repeating-linear-gradient(90deg,
-            #00F3FF,
-            #00F3FF 4px,
-            transparent 4px,
-            transparent 8px);
-    box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-    transition: width 0.1s linear;
-}
-
-.hud-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.loading-label {
-    color: #00F3FF;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    font-weight: bold;
-    animation: text-flicker 2s infinite;
-}
-
-.footer-deco {
-    width: 100px;
-    height: 10px;
-}
-
-.scifi-title {
-    color: #fff;
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-align: center;
-    border-bottom: 2px solid #00F3FF;
-    padding-bottom: 0.5rem;
-    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-}
-
-.loader-overlay.scifi-hud.fade-out {
+.loader-overlay.fade-out {
     opacity: 0;
     visibility: hidden;
 }
 
-@keyframes text-flicker {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.8;
-    }
-
-    52% {
-        opacity: 0.2;
-    }
-
-    54% {
-        opacity: 1;
-    }
+/* HUD Frames */
+.hud-frame {
+    width: 100%;
+    max-width: 800px;
+    height: 60px;
+    position: relative;
+    border-top: 2px solid #00f3ff;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
 }
 
+.bottom-frame {
+    border-top: none;
+    border-bottom: 2px solid #00f3ff;
+}
+
+.hud-corner-left,
+.hud-corner-right {
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background: #050b14;
+    /* Match background to hide line */
+    border-bottom: 2px solid #00f3ff;
+}
+
+.top-frame .hud-corner-left {
+    bottom: -2px;
+    left: -20px;
+    transform: skewX(45deg);
+}
+
+.top-frame .hud-corner-right {
+    bottom: -2px;
+    right: -20px;
+    transform: skewX(-45deg);
+}
+
+.bottom-frame .hud-corner-left,
+.bottom-frame .hud-corner-right {
+    height: 100%;
+    border-bottom: none;
+    border-top: 2px solid #00f3ff;
+}
+
+.bottom-frame .hud-corner-left {
+    top: -2px;
+    left: -20px;
+    transform: skewX(-45deg);
+}
+
+.bottom-frame .hud-corner-right {
+    top: -2px;
+    right: -20px;
+    transform: skewX(45deg);
+}
+
+
+/* Content */
+.scifi-style .loader-content {
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.scifi-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    margin-bottom: 3rem;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.loading-status {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.loading-dots {
+    letter-spacing: 5px;
+    margin-left: 10px;
+}
+
+/* Progress Box */
+.progress-box {
+    width: 100%;
+    height: 30px;
+    border: 2px solid #0072ff;
+    padding: 4px;
+    box-shadow: 0 0 15px rgba(0, 114, 255, 0.2);
+    position: relative;
+}
+
+.scifi-style .progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #00f3ff;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
+    transition: width 0.2s linear;
+}
+
+/* Decoration stripes */
+.hud-frame::before {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 10px;
+    background: repeating-linear-gradient(90deg,
+            #00f3ff,
+            #00f3ff 2px,
+            transparent 2px,
+            transparent 10px);
+    opacity: 0.5;
+}
+
+.top-frame::before {
+    top: 10px;
+    left: 20px;
+}
+
+.bottom-frame::before {
+    bottom: 10px;
+    right: 20px;
+}
+
+
 @media (max-width: 768px) {
-    .hud-wrapper {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .linear-hud {
-        width: 100%;
-    }
-
     .scifi-title {
-        font-size: 1rem;
-        width: 90%;
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .hud-frame {
+        max-width: 90%;
+    }
+
+    .loading-status {
+        font-size: 1.2rem;
     }
 }

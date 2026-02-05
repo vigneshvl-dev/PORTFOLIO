@@ -23,21 +23,31 @@
 
 <body>
     <!-- Premium Loader -->
-    <div id="loader-overlay" class="loader-overlay">
+    <!-- Sci-Fi HUD Loader -->
+    <div id="loader-overlay" class="loader-overlay scifi-style">
+        <div class="hud-frame top-frame">
+            <div class="hud-line"></div>
+            <div class="hud-corner-left"></div>
+            <div class="hud-corner-right"></div>
+        </div>
+
         <div class="loader-content">
-            <div class="loader-logo">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 20C40 20 60 80 80 80M80 20C60 20 40 80 20 80" stroke="currentColor" stroke-width="8"
-                        stroke-linecap="round" />
-                    <circle cx="50" cy="50" r="10" fill="currentColor" />
-                </svg>
+            <h1 class="scifi-title">WELCOME TO<br>VIGNESH V L ' PORTFOLIO</h1>
+
+            <div class="loading-status">
+                <span class="loading-text">LOADING</span>
+                <span class="loading-dots">........</span>
             </div>
-            <h1 class="loader-title">Vignesh's Odyssey</h1>
-            <p id="loader-status" class="loader-status">Initializing experience...</p>
-            <div class="progress-container">
+
+            <div class="progress-box">
                 <div id="progress-bar" class="progress-bar"></div>
             </div>
-            <div id="progress-text" class="progress-text">Ready! 0%</div>
+        </div>
+
+        <div class="hud-frame bottom-frame">
+            <div class="hud-line"></div>
+            <div class="hud-corner-left"></div>
+            <div class="hud-corner-right"></div>
         </div>
     </div>
 
