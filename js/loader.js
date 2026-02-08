@@ -12,9 +12,112 @@ document.addEventListener('DOMContentLoaded', () => {
     const symbolsContainer = document.getElementById('symbols-container');
     const particleCanvas = document.getElementById('particle-canvas');
 
+    const soundToggle = document.getElementById('sound-toggle');
+
     if (!loader || !progressBar) return;
 
+    // --- Audio System (Web Audio API Synthesis) ---
+    class AudioEngine {
+        constructor() {
+            this.ctx = null;
+            this.masterGain = null;
+            this.humOsc = null;
+            this.isMuted = true;
+        }
+
+        init() {
+            if (this.ctx) return;
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.gain.value = 0.15;
+            this.masterGain.connect(this.ctx.destination);
+        }
+
+        playPing(freq = 1200, duration = 0.05) {
+            if (!this.ctx || this.isMuted) return;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+            gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+
+            osc.start();
+            osc.stop(this.ctx.currentTime + duration);
+        }
+
+        startHum() {
+            if (!this.ctx || this.isMuted || this.humOsc) return;
+            this.humOsc = this.ctx.createOscillator();
+            const humGain = this.ctx.createGain();
+
+            this.humOsc.type = 'triangle';
+            this.humOsc.frequency.setValueAtTime(55, this.ctx.currentTime); // Low A
+
+            humGain.gain.setValueAtTime(0, this.ctx.currentTime);
+            humGain.gain.linearRampToValueAtTime(0.05, this.ctx.currentTime + 1);
+
+            this.humOsc.connect(humGain);
+            humGain.connect(this.masterGain);
+
+            this.humOsc.start();
+            this.humGainNode = humGain; // Save to stop later
+        }
+
+        stopHum() {
+            if (this.humGainNode && this.ctx) {
+                this.humGainNode.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.5);
+                setTimeout(() => {
+                    if (this.humOsc) {
+                        this.humOsc.stop();
+                        this.humOsc = null;
+                    }
+                }, 500);
+            }
+        }
+
+        playShutdown() {
+            if (!this.ctx || this.isMuted) return;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.frequency.setValueAtTime(200, this.ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(20, this.ctx.currentTime + 0.8);
+
+            gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+            gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.8);
+
+            osc.connect(gain);
+            gain.connect(this.masterGain);
+
+            osc.start();
+            osc.stop(this.ctx.currentTime + 0.8);
+        }
+    }
+
+    const audio = new AudioEngine();
+
+    soundToggle.addEventListener('click', () => {
+        audio.init();
+        audio.isMuted = !audio.isMuted;
+
+        if (audio.isMuted) {
+            soundToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            audio.stopHum();
+        } else {
+            soundToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+            audio.startHum();
+            audio.playPing(800, 0.1);
+        }
+    });
+
     // --- Particle System ---
+
     let particles = [];
     const ctx = particleCanvas ? createCanvas() : null;
 
@@ -129,6 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
             typingText.innerText = currentMessage.substring(0, charIndex + 1);
             charIndex++;
             typingSpeed = 100;
+            // Play typing ping
+            if (charIndex % 2 === 0) audio.playPing(1000 + (Math.random() * 200), 0.03);
         }
 
         if (!isDeleting && charIndex === currentMessage.length) {
@@ -174,9 +279,13 @@ document.addEventListener('DOMContentLoaded', () => {
         charIndex = 12; // "System Ready."
         typingText.innerText = "System Ready.";
 
+        audio.playPing(1500, 0.1);
+
         setTimeout(() => {
             loader.classList.add('fade-out');
             document.body.style.overflow = 'auto';
+            audio.playShutdown();
+            audio.stopHum();
 
             setTimeout(() => {
                 loader.style.display = 'none';

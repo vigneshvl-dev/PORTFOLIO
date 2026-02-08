@@ -1425,6 +1425,31 @@ h6 {
 }
 
 /* Digital Scan Line Effect */
+.sound-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.sound-toggle:hover {
+    background: rgba(6, 182, 212, 0.2);
+    color: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+    transform: scale(1.1);
+}
+
 .loader-title {
     font-size: 1.8rem;
     font-weight: 800;
