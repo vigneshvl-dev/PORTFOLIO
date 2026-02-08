@@ -22,32 +22,40 @@
 </head>
 
 <body>
-    <!-- Premium Loader -->
-    <!-- Sci-Fi HUD Loader -->
-    <div id="loader-overlay" class="loader-overlay scifi-style">
-        <div class="hud-frame top-frame">
-            <div class="hud-line"></div>
-            <div class="hud-corner-left"></div>
-            <div class="hud-corner-right"></div>
-        </div>
+    <!-- Modern Tech Loader -->
+    <div id="loader-overlay" class="loader-overlay">
+        <div class="particle-background" id="particle-canvas"></div>
 
-        <div class="loader-content">
-            <h1 class="scifi-title">WELCOME TO<br>VIGNESH V L ' PORTFOLIO</h1>
+        <div class="floating-symbols" id="symbols-container"></div>
 
-            <div class="loading-status">
-                <span class="loading-text">LOADING</span>
-                <span class="loading-dots">........</span>
+        <div class="loader-card glass-panel">
+            <div class="scan-line"></div>
+
+            <div class="loader-ring-container">
+                <div class="tech-ring ring-1"></div>
+                <div class="tech-ring ring-2"></div>
+                <div class="tech-ring ring-3"></div>
+                <div class="loader-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
             </div>
 
-            <div class="progress-box">
-                <div id="progress-bar" class="progress-bar"></div>
-            </div>
-        </div>
+            <div class="loader-content">
+                <div class="typing-container">
+                    <span id="typing-text" class="typing-text">Initializing Systems...</span>
+                    <span class="cursor">_</span>
+                </div>
 
-        <div class="hud-frame bottom-frame">
-            <div class="hud-line"></div>
-            <div class="hud-corner-left"></div>
-            <div class="hud-corner-right"></div>
+                <div class="progress-container">
+                    <div class="progress-bar-glow"></div>
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+
+                <div class="tech-stats">
+                    <span class="stat-left">OS: PORTFOLIO_V1.1</span>
+                    <span id="progress-percent" class="stat-right">0%</span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -230,20 +238,7 @@
                         </div>
                         <p class="cert-detail">Participated in Engineers Day 2025 and received recognition.</p>
                     </div>
-                    <!-- Gemini Certified Student Card -->
-                    <div class="stat-card reveal certificate-card">
-                        <div class="stat-icon" style="color: #4285F4;"><i class="fa-brands fa-google"></i></div>
-                        <div class="stat-info">
-                            <h3>Gemini Certified</h3>
-                            <p>University</p>
-                        </div>
-                        <div class="certificate-img-wrapper">
-                            <img src="assets/gemini_certificate.jpg" alt="Gemini Certified Student Certificate"
-                                class="cert-img">
-                        </div>
-                        <p class="cert-detail">Awarded for demonstrating knowledge, skills, and basic competencies
-                            needed to use Google AI.</p>
-                    </div>
+
                 </div>
             </div>
         </section>

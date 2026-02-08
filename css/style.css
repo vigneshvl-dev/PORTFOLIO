@@ -1332,25 +1332,21 @@ h6 {
     }
 }
 
-/* Sci-Fi HUD Loader Styles */
-.loader-overlay.scifi-style {
+/* Modern Animated Tech Loader - v5.0 */
+.loader-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #050b14;
-    z-index: 9999;
+    background-color: #020617;
+    /* Very dark slate */
+    z-index: 99999;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s;
-    font-family: 'Rajdhani', 'Orbitron', sans-serif;
-    /* Tech feel */
-    padding: 20px;
-    box-sizing: border-box;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
 }
 
 .loader-overlay.fade-out {
@@ -1358,158 +1354,312 @@ h6 {
     visibility: hidden;
 }
 
-/* HUD Frames */
-.hud-frame {
-    width: 100%;
-    max-width: 800px;
-    height: 60px;
-    position: relative;
-    border-top: 2px solid #00f3ff;
-    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
-}
-
-.bottom-frame {
-    border-top: none;
-    border-bottom: 2px solid #00f3ff;
-}
-
-.hud-corner-left,
-.hud-corner-right {
+/* Particle Background */
+.particle-background {
     position: absolute;
-    width: 100px;
-    height: 100%;
-    background: #050b14;
-    /* Match background to hide line */
-    border-bottom: 2px solid #00f3ff;
-}
-
-.top-frame .hud-corner-left {
-    bottom: -2px;
-    left: -20px;
-    transform: skewX(45deg);
-}
-
-.top-frame .hud-corner-right {
-    bottom: -2px;
-    right: -20px;
-    transform: skewX(-45deg);
-}
-
-.bottom-frame .hud-corner-left,
-.bottom-frame .hud-corner-right {
-    height: 100%;
-    border-bottom: none;
-    border-top: 2px solid #00f3ff;
-}
-
-.bottom-frame .hud-corner-left {
-    top: -2px;
-    left: -20px;
-    transform: skewX(-45deg);
-}
-
-.bottom-frame .hud-corner-right {
-    top: -2px;
-    right: -20px;
-    transform: skewX(45deg);
-}
-
-
-/* Content */
-.scifi-style .loader-content {
-    text-align: center;
-    color: #fff;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 600px;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Floating Symbols Container */
+.floating-symbols {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.symbol {
+    position: absolute;
+    color: var(--accent-secondary);
+    font-family: monospace;
+    font-size: 1.2rem;
+    opacity: 0.3;
+    animation: float-symbol var(--duration) linear infinite;
+    filter: blur(1px);
+}
+
+@keyframes float-symbol {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.3;
+    }
+
+    90% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Loader Card - Glassmorphism */
+.loader-card {
+    position: relative;
+    z-index: 10;
+    width: 90%;
+    max-width: 450px;
+    padding: 3rem 2rem;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-}
-
-.scifi-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    line-height: 1.4;
-    margin-bottom: 3rem;
-    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-}
-
-.loading-status {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-}
-
-.loading-dots {
-    letter-spacing: 5px;
-    margin-left: 10px;
-}
-
-/* Progress Box */
-.progress-box {
-    width: 100%;
-    height: 30px;
-    border: 2px solid #0072ff;
-    padding: 4px;
-    box-shadow: 0 0 15px rgba(0, 114, 255, 0.2);
+    gap: 2.5rem;
+    background: rgba(15, 23, 42, 0.7);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(6, 182, 212, 0.1);
     position: relative;
+    overflow: hidden;
 }
 
-.scifi-style .progress-bar {
+/* Digital Scan Line Effect */
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(6, 182, 212, 0.5),
+            rgba(139, 92, 246, 0.5),
+            transparent);
+    z-index: 11;
+    animation: scan 3s linear infinite;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+}
+
+@keyframes scan {
+    0% {
+        top: -2%;
+    }
+
+    100% {
+        top: 102%;
+    }
+}
+
+/* Tech Ring Animation */
+.loader-ring-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tech-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.ring-1 {
+    width: 120px;
+    height: 120px;
+    border-top-color: var(--accent-secondary);
+    border-bottom-color: var(--accent-secondary);
+    animation: rotate-ring 2s linear infinite;
+    filter: drop-shadow(0 0 8px var(--accent-secondary));
+}
+
+.ring-2 {
+    width: 90px;
+    height: 90px;
+    border-left-color: var(--accent-primary);
+    border-right-color: var(--accent-primary);
+    animation: rotate-ring-rev 1.5s linear infinite;
+    filter: drop-shadow(0 0 8px var(--accent-primary));
+}
+
+.ring-3 {
+    width: 60px;
+    height: 60px;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    animation: pulse-ring 2s ease-in-out infinite;
+}
+
+.loader-icon {
+    font-size: 1.8rem;
+    color: #fff;
+    z-index: 5;
+    animation: icon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes rotate-ring {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-ring-rev {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes pulse-ring {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes icon-pulse {
+
+    0%,
+    100% {
+        text-shadow: 0 0 5px var(--accent-secondary);
+        transform: scale(1);
+    }
+
+    50% {
+        text-shadow: 0 0 20px var(--accent-secondary), 0 0 30px var(--accent-primary);
+        transform: scale(1.1);
+    }
+}
+
+/* Content & Typography */
+.loader-content {
+    width: 100%;
+}
+
+.typing-container {
+    height: 1.5rem;
+    margin-bottom: 2rem;
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: var(--accent-secondary);
+    letter-spacing: 1px;
+}
+
+.cursor {
+    animation: blink 0.8s step-end infinite;
+    color: #fff;
+}
+
+@keyframes blink {
+
+    from,
+    to {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Progress Bar Styles */
+.progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.progress-bar-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.3), transparent);
+    animation: progress-glow 2s linear infinite;
+}
+
+@keyframes progress-glow {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.progress-bar {
     height: 100%;
     width: 0%;
-    background-color: #00f3ff;
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.6);
-    transition: width 0.2s linear;
+    background: var(--accent-gradient);
+    border-radius: 10px;
+    box-shadow: 0 0 15px var(--accent-secondary);
+    transition: width 0.3s ease;
 }
 
-/* Decoration stripes */
-.hud-frame::before {
-    content: '';
-    position: absolute;
-    width: 50px;
-    height: 10px;
-    background: repeating-linear-gradient(90deg,
-            #00f3ff,
-            #00f3ff 2px,
-            transparent 2px,
-            transparent 10px);
-    opacity: 0.5;
+.tech-stats {
+    display: flex;
+    justify-content: space-between;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.top-frame::before {
-    top: 10px;
-    left: 20px;
+.stat-right {
+    color: var(--accent-secondary);
+    font-weight: bold;
 }
 
-.bottom-frame::before {
-    bottom: 10px;
-    right: 20px;
-}
-
-
-@media (max-width: 768px) {
-    .scifi-title {
-        font-size: 1.5rem;
-        margin-bottom: 2rem;
+@media (max-width: 480px) {
+    .loader-card {
+        padding: 2.5rem 1.5rem;
+        width: 85%;
     }
 
-    .hud-frame {
-        max-width: 90%;
+    .tech-ring-container {
+        width: 100px;
+        height: 100px;
     }
 
-    .loading-status {
-        font-size: 1.2rem;
+    .ring-1 {
+        width: 100px;
+        height: 100px;
+    }
+
+    .ring-2 {
+        width: 75px;
+        height: 75px;
+    }
+
+    .ring-3 {
+        width: 50px;
+        height: 50px;
+    }
+
+    .typing-text {
+        font-size: 0.9rem;
     }
 }
