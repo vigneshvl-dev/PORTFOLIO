@@ -1,26 +1,43 @@
 @echo off
 cd /d "%~dp0"
-echo Starting deployment... > deploy_log.txt
-echo Date: %date% %time% >> deploy_log.txt
 
-echo Preparing files (Running git add)... >> deploy_log.txt
-git add . >> deploy_log.txt 2>&1
-
-echo Saving changes (Running git commit)... >> deploy_log.txt
-git commit -m "Update portfolio: Remove Engineers Day 2025 Certificate" >> deploy_log.txt 2>&1
-
-echo Synchronizing with GitHub (Running git pull)... >> deploy_log.txt
-git pull --rebase >> deploy_log.txt 2>&1
-
-echo Uploading to website (Running git push)... >> deploy_log.txt
-git push >> deploy_log.txt 2>&1
-
-echo Done! >> deploy_log.txt
 echo.
 echo ======================================================
-echo PROCESS COMPLETE!
+echo DIAGNOSTIC DEPLOYMENT
 echo ======================================================
-echo If you don't see changes on your site, please check 
-echo the "deploy_log.txt" file for errors.
+echo.
+
+:: Check if git is installed
+git --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [ERROR] Git is not installed or not in your PATH.
+    echo Please install Git and restart this window.
+    pause
+    exit /b
+)
+
+echo [1/4] Checking current status...
+git status
+
+echo.
+echo [2/4] Adding changes...
+git add .
+
+echo.
+echo [3/4] Saving changes (Commit)...
+git commit -m "Update portfolio: Combined stats card"
+
+echo.
+echo [4/4] Uploading to GitHub...
+:: Trying to push to both 'main' and 'master' just in case
+git push origin main --force
+git push origin master --force
+
+echo.
 echo ======================================================
+echo PROCESS FINISHED!
+echo ======================================================
+echo If you see "Everything up-to-date", it means it worked.
+echo If you see errors, please copy them and tell me!
+echo.
 pause
