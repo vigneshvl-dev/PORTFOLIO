@@ -1,20 +1,18 @@
 @echo off
-:: Ensure the script runs in the directory where it is located
 cd /d "%~dp0"
+echo Starting deployment... > deploy_log.txt
+echo Date: %date% %time% >> deploy_log.txt
 
-echo Deploying your portfolio updates from %cd%...
+echo Running git add . >> deploy_log.txt
+git add . >> deploy_log.txt 2>&1
 
-:: Check if .git directory exists
-if not exist ".git" (
-    echo ERROR: This folder is not a Git repository. 
-    echo Please make sure you are running this script inside your PORTFOLIO folder.
-    pause
-    exit /b
-)
+echo Running git commit... >> deploy_log.txt
+git commit -m "Update portfolio: Remove Engineers Day 2025 Certificate" >> deploy_log.txt 2>&1
 
-git add .
-git commit -m "Update portfolio: Remove Gemini Certified Student Certificate"
-git push
+echo Running git push... >> deploy_log.txt
+git push >> deploy_log.txt 2>&1
+
+echo Done! >> deploy_log.txt
 echo.
-echo Done! Please refresh your website in 1-2 minutes.
+echo Process complete. If you don't see changes, please check deploy_log.txt.
 pause
