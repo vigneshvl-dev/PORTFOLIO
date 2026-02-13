@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let messageIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typingSpeed = 100;
+    let typingSpeed = 50;
 
     const symbols = ['< />', '{ }', '0 1', '[ ]', '( )', '=>', '*/', '&&', '||'];
     const symbolCount = 20;
@@ -227,22 +227,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isDeleting) {
             typingText.innerText = currentMessage.substring(0, charIndex - 1);
             charIndex--;
-            typingSpeed = 50;
+            typingSpeed = 25;
         } else {
             typingText.innerText = currentMessage.substring(0, charIndex + 1);
             charIndex++;
-            typingSpeed = 100;
+            typingSpeed = 50;
             // Play typing ping
             if (charIndex % 2 === 0) audio.playPing(1000 + (Math.random() * 200), 0.03);
         }
 
         if (!isDeleting && charIndex === currentMessage.length) {
             isDeleting = true;
-            typingSpeed = 2000; // Pause at end
+            typingSpeed = 800; // Pause at end
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             messageIndex = (messageIndex + 1) % statusMessages.length;
-            typingSpeed = 500; // Pause before new message
+            typingSpeed = 300; // Pause before new message
         }
 
         // Stop cycling if loading is done and we reached "System Ready"
@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Progress Simulation ---
     let progress = 0;
     function updateProgress() {
-        const increment = Math.random() * 3 + 0.5;
+        const increment = Math.random() * 8 + 3;
         progress += increment;
 
         if (progress > 100) progress = 100;
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         progressPercent.innerText = `${Math.floor(progress)}%`;
 
         if (progress < 100) {
-            const delay = Math.random() * 150 + 50;
+            const delay = Math.random() * 50 + 20;
             setTimeout(updateProgress, delay);
         } else {
             completeLoading();
@@ -289,8 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 loader.style.display = 'none';
-            }, 800);
-        }, 1200);
+            }, 500);
+        }, 600);
     }
 
     // --- Initialization ---

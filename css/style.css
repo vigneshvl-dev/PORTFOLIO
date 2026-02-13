@@ -1510,7 +1510,7 @@ h6 {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
 }
 
 .loader-overlay.fade-out {
