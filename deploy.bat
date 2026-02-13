@@ -29,9 +29,8 @@ git commit -m "Update portfolio: Combined stats card"
 
 echo.
 echo [4/4] Uploading to GitHub...
-:: Trying to push to both 'main' and 'master' just in case
+:: Trying to push only to 'main' branch
 git push origin main --force
-git push origin master --force
 
 echo.
 echo ======================================================
