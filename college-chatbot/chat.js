@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // College Data
     const collegeData = {
-        details: "Campus D.esk is a premier institution known for academic excellence and innovation. Located in the heart of the city, we offer a vibrant campus life and world-class facilities.",
+        details: "Valora College is a premier institution known for academic excellence and innovation. Located in the heart of the city, we offer a vibrant campus life and world-class facilities.",
         courses: "We offer undergraduate and postgraduate programs in Engineering (CSE, EEE, ECE, Civil, Mechanical), Data Science, AI & ML, and Business Administration.",
         admissions: "Admissions for the 2026-27 session are now open! You can apply online through our portal or visit the college office for assistance.",
         fees: "Our fee structure is competitive and varies by course. Academic scholarships are available for deserving students. Please visit the office for a detailed fee breakdown.",
         facilities: "Our campus features state-of-the-art labs, a digital library, modern sports complexes, high-speed Wi-Fi, and premium hostel accommodations.",
         placements: "We have an exceptional placement record with 95%+ graduates placed in top MNCs like Google, Microsoft, Amazon, and TATA. Our average package is 8.5 LPA.",
-        contact: "You can reach us at info@campusdesk.edu or call our office at +1 (555) 123-4567. We are open Mon-Sat, 9 AM to 5 PM."
+        contact: "You can reach us at info@valoracollege.edu or call our office at +1 (555) 123-4567. We are open Mon-Sat, 9 AM to 5 PM."
     };
 
     // Toggle Chatbot Window
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let response = "";
 
         if (query.includes('hello') || query.includes('hi')) {
-            response = "Hello! I'm here to help you with information about Campus D.esk.";
+            response = "Hello! I'm here to help you with information about Valora College.";
         } else if (query.includes('course') || query.includes('program') || query.includes('study')) {
             response = collegeData.courses;
         } else if (query.includes('admission') || query.includes('apply')) {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             response = collegeData.placements;
         } else if (query.includes('contact') || query.includes('phone') || query.includes('email') || query.includes('address') || query.includes('location')) {
             response = collegeData.contact;
-        } else if (query.includes('about') || query.includes('college') || query.includes('campus')) {
+        } else if (query.includes('about') || query.includes('college') || query.includes('valora')) {
             response = collegeData.details;
         } else {
             response = "Sorry, I don’t have that information. Please contact the college office.";

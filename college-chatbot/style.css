@@ -103,6 +103,15 @@ body {
     color: var(--primary);
 }
 
+.nav-logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -118,20 +127,6 @@ body {
 
 .nav-links a:hover {
     color: var(--primary);
-}
-
-.top-banner {
-    margin-top: 70px;
-    width: 100%;
-    overflow: hidden;
-    border-bottom: 2px solid var(--glass-border);
-}
-
-.top-banner img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
 }
 
 .hero {
