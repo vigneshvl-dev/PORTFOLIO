@@ -120,6 +120,20 @@ body {
     color: var(--primary);
 }
 
+.top-banner {
+    margin-top: 70px;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 2px solid var(--glass-border);
+}
+
+.top-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
 .hero {
     height: 100vh;
     display: flex;
@@ -137,6 +151,7 @@ body {
 .hero-content h1 span {
     background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
