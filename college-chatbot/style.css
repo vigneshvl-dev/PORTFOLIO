@@ -104,12 +104,15 @@ body {
 }
 
 .nav-logo-img {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
+    object-fit: contain;
+    margin-right: 12px;
     vertical-align: middle;
+    background: white;
+    /* Added white background to make crest stand out */
+    padding: 2px;
 }
 
 .nav-links {
