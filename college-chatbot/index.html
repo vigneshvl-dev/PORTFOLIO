@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valora College | Premium Education</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">VALORA <span>COLLEGE</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#admission">Admission</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <h1>Empowering Futures, <br><span>Inspiring Minds.</span></h1>
+            <p>Experience world-class education with cutting-edge facilities and industry-leading placements.</p>
+            <div class="hero-btns">
+                <a href="#admission" class="btn btn-primary">Apply Now</a>
+                <a href="#courses" class="btn btn-secondary">Explore Courses</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Our College</h2>
+            <div class="grid">
+                <div class="card glass">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Academic Excellence</h3>
+                    <p>Ranked among the top institutions for higher education and research.</p>
+                </div>
+                <div class="card glass">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Modern Labs</h3>
+                    <p>State-of-the-art laboratory facilities for hands-on learning.</p>
+                </div>
+                <div class="card glass">
+                    <i class="fas fa-users"></i>
+                    <h3>Expert Faculty</h3>
+                    <p>Learn from industry veterans and PhD-level educators.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Container -->
+    <div id="chatbot-widget" class="chatbot-widget">
+        <button id="chatbot-toggle" class="chatbot-toggle glass">
+            <i class="fas fa-comment-dots"></i>
+        </button>
+        <div id="chatbot-window" class="chatbot-window glass">
+            <div class="chatbot-header">
+                <div class="chatbot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="chatbot-info">
+                    <h3>Valora AI</h3>
+                    <p>College Assistant</p>
+                </div>
+                <button id="chatbot-close" class="chatbot-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="chatbot-messages" class="chatbot-messages">
+                <div class="message bot">
+                    Hello! I'm Valora AI, your college assistant. How can I help you today?
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+
+</html>
