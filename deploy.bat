@@ -25,7 +25,7 @@ git add .
 
 echo.
 echo [3/4] Saving changes (Commit)...
-git commit -m "Add AI College Chatbot project"
+git commit -m "Add D.esk AI project card to portfolio"
 
 echo.
 echo [4/4] Uploading to GitHub...
