@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const symbolsContainer = document.getElementById('symbols-container');
     const particleCanvas = document.getElementById('particle-canvas');
 
-    const soundToggle = document.getElementById('sound-toggle');
 
     if (!loader || !progressBar) return;
 
@@ -102,19 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const audio = new AudioEngine();
 
-    soundToggle.addEventListener('click', () => {
-        audio.init();
-        audio.isMuted = !audio.isMuted;
-
-        if (audio.isMuted) {
-            soundToggle.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-            audio.stopHum();
-        } else {
-            soundToggle.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-            audio.startHum();
-            audio.playPing(800, 0.1);
-        }
-    });
 
     // --- Particle System ---
 
