@@ -304,6 +304,135 @@
             </div>
         </section>
 
+        <!-- Featured Project Section -->
+        <section id="featured-project" class="section">
+            <div class="container featured-container">
+                <div class="featured-card glass-panel reveal">
+                    <div class="featured-glow"></div>
+
+                    <div class="featured-content-grid">
+                        <!-- Left Side: Chat UI Mockup -->
+                        <div class="chat-mockup-wrapper">
+                            <div class="chat-card glass-panel floating-animation">
+                                <div class="chat-header">
+                                    <div class="chat-user">
+                                        <div class="user-avatar">🤖</div>
+                                        <div class="user-info">
+                                            <span class="user-name">D.esk AI</span>
+                                            <span class="user-status">Online</span>
+                                        </div>
+                                    </div>
+                                    <div class="chat-actions">
+                                        <i class="fa-solid fa-video"></i>
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+                                </div>
+
+                                <div class="chat-body">
+                                    <div class="chat-message bot">
+                                        <div class="message-content">Hello! How can I assist you today at Stella Mary's?
+                                            🎓</div>
+                                    </div>
+                                    <div class="chat-message user">
+                                        <div class="message-content">Tell me about the Computer Science department.
+                                        </div>
+                                    </div>
+                                    <div class="chat-message bot">
+                                        <div class="message-content">The CSE department offers state-of-the-art labs and
+                                            industry-aligned curriculum... 🚀</div>
+                                    </div>
+                                    <div class="chat-message user">
+                                        <div class="message-content">What about placements? 📈</div>
+                                    </div>
+                                </div>
+
+                                <div class="chat-footer">
+                                    <div class="chat-input-area">
+                                        <span>Type a message...</span>
+                                        <div class="chat-input-icons">
+                                            <i class="fa-regular fa-face-smile"></i>
+                                            <i class="fa-solid fa-paper-plane"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Blurred decorative elements -->
+                            <div class="blob-element pink"></div>
+                            <div class="blob-element blue"></div>
+                        </div>
+
+                        <!-- Right Side: Content -->
+                        <div class="featured-text-content">
+                            <div class="featured-badge">FEATURED PROJECT</div>
+                            <h2 class="featured-title">D.ESK AI</h2>
+                            <p class="featured-description">
+                                A high-end intelligent assistant designed for <strong>Stella Mary's College of
+                                    Engineering</strong>.
+                                Supporting real-time interaction, intelligent responses, and seamless voice/text
+                                communication
+                                to empower students and faculty alike.
+                            </p>
+
+                            <div class="featured-features">
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-bolt"></i>
+                                    <span>Real-time Interaction</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-brain"></i>
+                                    <span>Intelligent Responses</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fa-solid fa-microphone"></i>
+                                    <span>Voice Support</span>
+                                </div>
+                            </div>
+
+                            <div class="featured-actions">
+                                <button id="view-project-btn" class="btn-primary">View Project</button>
+                                <a href="https://vigneshvl-dev.github.io/chatbot-smce/loading.html" target="_blank"
+                                    class="btn-secondary">Live Demo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image Gallery Modal -->
+        <div id="gallery-modal" class="gallery-modal">
+            <span class="close-gallery">&times;</span>
+            <div class="gallery-content">
+                <div class="gallery-slider">
+                    <img src="https://i.postimg.cc/8zKSGNFP/Screenshot-2026-03-01-184930.png" class="gallery-img active"
+                        alt="D.esk AI Screenshot 1">
+                    <img src="https://i.postimg.cc/x1dwthsN/Screenshot-2026-03-01-184941.png" class="gallery-img"
+                        alt="D.esk AI Screenshot 2">
+                    <img src="https://i.postimg.cc/BbsyDVLQ/Screenshot-2026-03-01-184946.png" class="gallery-img"
+                        alt="D.esk AI Screenshot 3">
+                    <img src="https://i.postimg.cc/pLySD8T2/Screenshot-2026-03-01-185023.png" class="gallery-img"
+                        alt="D.esk AI Screenshot 4">
+                    <img src="https://i.postimg.cc/QtZnGyqy/Screenshot-2026-03-01-185032.png" class="gallery-img"
+                        alt="D.esk AI Screenshot 5">
+                    <img src="https://i.postimg.cc/XqH8JH9m/Screenshot-2026-03-01-185042.png" class="gallery-img"
+                        alt="D.esk AI Screenshot 6">
+                </div>
+
+                <a class="prev-gallery">&#10094;</a>
+                <a class="next-gallery">&#10095;</a>
+
+                <div class="gallery-dots">
+                    <span class="dot-gallery active" onclick="currentSlide(1)"></span>
+                    <span class="dot-gallery" onclick="currentSlide(2)"></span>
+                    <span class="dot-gallery" onclick="currentSlide(3)"></span>
+                    <span class="dot-gallery" onclick="currentSlide(4)"></span>
+                    <span class="dot-gallery" onclick="currentSlide(5)"></span>
+                    <span class="dot-gallery" onclick="currentSlide(6)"></span>
+                </div>
+            </div>
+        </div>
+
         <!-- Projects Section -->
         <section id="projects" class="section bg-darker">
             <div class="container">
@@ -316,31 +445,7 @@
                 <div class="projects-grid">
 
 
-                    <!-- D.esk AI - College Chatbot -->
-                    <div class="project-card" id="desk-ai-project">
-                        <div class="project-tag">FEATURED PROJECT</div>
-                        <div class="project-icon">🤖</div>
-                        <h3>D.ESK AI</h3>
-                        <p>An AI-powered college assistant chatbot built for Stella Mary's College of Engineering.
-                            Provides instant answers to student queries about admissions, placements, faculty info, and
-                            more — available 24/7.</p>
-                        <div class="project-tech">
-                            <span class="tech-tag" style="--tag-color: #e34c26;">HTML5</span>
-                            <span class="tech-tag" style="--tag-color: #264de4;">CSS3</span>
-                            <span class="tech-tag" style="--tag-color: #f7df1e; color: #000;">JavaScript</span>
-                            <span class="tech-tag" style="--tag-color: #10b981;">AI Chatbot</span>
-                        </div>
-                        <div style="display: flex; gap: 1.5rem; margin-top: auto;">
-                            <a href="https://vigneshvl-dev.github.io/chatbot-smce/loading.html" target="_blank"
-                                class="project-link">
-                                Live Demo <span>→</span>
-                            </a>
-                            <a href="https://github.com/vigneshvl-dev/chatbot-smce" target="_blank" class="project-link"
-                                style="color: var(--text-secondary);">
-                                GitHub
-                            </a>
-                        </div>
-                    </div>
+                    <!-- D.esk AI - College Chatbot (Original card removed as it's now a featured section) -->
 
                     <!-- Personal Portfolio Live -->
                     <div class="project-card">
