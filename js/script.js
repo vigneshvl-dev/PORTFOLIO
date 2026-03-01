@@ -117,4 +117,79 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start typewriter after a short delay
         setTimeout(typeWriter, 1000);
     }
+
+    // --- Featured Project Gallery Modal Logic ---
+    const galleryModal = document.getElementById('gallery-modal');
+    const viewProjectBtn = document.getElementById('view-project-btn');
+    const closeGallery = document.querySelector('.close-gallery');
+    const nextBtn = document.querySelector('.next-gallery');
+    const prevBtn = document.querySelector('.prev-gallery');
+    const galleryImages = document.querySelectorAll('.gallery-img');
+    const galleryDots = document.querySelectorAll('.dot-gallery');
+
+    let slideIndex = 1;
+
+    if (viewProjectBtn && galleryModal) {
+        viewProjectBtn.onclick = () => {
+            galleryModal.style.display = "block";
+            document.body.style.overflow = "hidden"; // Prevent scroll
+            showSlides(slideIndex);
+        }
+
+        closeGallery.onclick = () => {
+            galleryModal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        window.onclick = (event) => {
+            if (event.target == galleryModal) {
+                galleryModal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+
+        // Next/previous controls
+        nextBtn.onclick = () => showSlides(slideIndex += 1);
+        prevBtn.onclick = () => showSlides(slideIndex -= 1);
+
+        // Dot controls
+        window.currentSlide = (n) => showSlides(slideIndex = n);
+
+        function showSlides(n) {
+            if (n > galleryImages.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = galleryImages.length }
+
+            galleryImages.forEach(img => img.classList.remove('active'));
+            galleryDots.forEach(dot => dot.classList.remove('active'));
+
+            galleryImages[slideIndex - 1].classList.add('active');
+            galleryDots[slideIndex - 1].classList.add('active');
+        }
+    }
+
+    // --- Chat Card Mouse Parallax Effect ---
+    const chatCard = document.querySelector('.chat-card');
+    const mockupWrapper = document.querySelector('.chat-mockup-wrapper');
+
+    if (chatCard && mockupWrapper) {
+        mockupWrapper.addEventListener('mousemove', (e) => {
+            const rect = mockupWrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+
+            chatCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            chatCard.classList.remove('floating-animation'); // Pause floating while interacting
+        });
+
+        mockupWrapper.addEventListener('mouseleave', () => {
+            chatCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+            chatCard.classList.add('floating-animation'); // Resume floating
+        });
+    }
 });
