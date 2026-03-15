@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Scroll Reveal Animation
-    const revealElements = document.querySelectorAll('.section-header, .about-content, .skills-grid, .services-grid, .projects-grid, .certificates-grid, .contact-wrapper, .hero-content, .hero-image-wrapper, .stat-card, #stats .section-header');
+    const revealElements = document.querySelectorAll('.section-header, .about-content, .skills-grid, .services-grid, .projects-grid, .certificates-grid, .contact-wrapper, .hero-content, .hero-image-wrapper, .stat-card, #stats .section-header, .project-card');
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
