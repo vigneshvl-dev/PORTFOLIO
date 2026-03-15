@@ -771,6 +771,90 @@ h6 {
     border-color: var(--accent-secondary);
 }
 
+/* About Image & DevOps Domain styles */
+.about-image {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container {
+    position: relative;
+    max-width: 100%;
+}
+
+.featured-about-img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
+    transition: var(--transition);
+}
+
+.featured-about-img:hover {
+    transform: scale(1.02);
+    border-color: var(--accent-secondary);
+}
+
+.devops-domain-badge {
+    position: absolute;
+    bottom: -15px;
+    right: -15px;
+    background: var(--card-bg);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--accent-primary);
+    z-index: 5;
+    animation: floating-badge 3s infinite alternate ease-in-out;
+}
+
+.devops-logo-animation {
+    background: rgba(139, 92, 246, 0.1);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.devops-logo-animation i {
+    font-size: 1.5rem;
+    color: var(--accent-primary);
+    animation: pulse-logo 2s infinite ease-in-out;
+}
+
+.devops-text .label {
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.devops-text .domain {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1rem;
+    white-space: nowrap;
+}
+
+@keyframes pulse-logo {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+@keyframes floating-badge {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
+
 .cgpa-header {
     display: flex;
     justify-content: space-between;
