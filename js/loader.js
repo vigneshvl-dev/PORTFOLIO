@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.masterGain.connect(this.ctx.destination);
         }
 
-        playPing(freq = 1200, duration = 0.05) {
+        playPing(freq = 1000, duration = 0.05) {
             if (!this.ctx || this.isMuted) return;
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
