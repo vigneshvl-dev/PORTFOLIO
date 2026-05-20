@@ -19,7 +19,7 @@
     --font-body: 'Inter', sans-serif;
 
     --transition: all 0.3s ease;
-    --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    --shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
     --border-radius: 12px;
 
     /* Glassmorphism Variables */
